@@ -1,0 +1,221 @@
+aid: wm
+url: https://raw.githubusercontent.com/api-evangelist/wm/refs/heads/main/apis.yml
+name: WM
+kind: company
+description: WM (formerly Waste Management, Inc.) is North America's largest
+  integrated environmental solutions company, serving nearly 20 million
+  municipal, commercial, industrial, and residential customers through
+  collection, transfer, recycling, landfill, and waste-to-energy operations.
+  WM does not run a self-serve, publicly-signup developer platform. It
+  publishes a documented partner/customer REST API at api.wm.com covering
+  account-level service and billing data - service details and pickup
+  schedules, live service status and truck ETA, routing and hauling material
+  information, pricing, invoices and aging balance, communication
+  preferences, contacts, cases, tickets, and account activity notes. Access
+  requires a WM-issued ClientId plus a JSON Web Token (JWT) and is granted on
+  request to existing commercial/enterprise customers and integration
+  partners by emailing apiaccess@wm.com; there is no open, self-serve API key
+  signup.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Waste Management
+- Recycling
+- Environmental Services
+- Field Services
+- Logistics
+- Account Management
+- Enterprise
+- B2B
+created: '2026-07-03'
+modified: '2026-07-03'
+specificationVersion: '0.19'
+apis:
+- aid: wm:wm-services-api
+  name: WM Services API
+  tags:
+  - Services
+  - Pickup
+  - Scheduling
+  - ETA
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://api.wm.com/Services/index.html
+  baseURL: https://api.wm.com/v1
+  properties:
+  - url: https://api.wm.com/servicesoverview/index.html
+    type: Documentation
+  - url: https://api.wm.com/Services/index.html
+    type: APIReference
+  - url: openapi/wm-openapi.yml
+    type: OpenAPI
+  description: Retrieve the services associated with a customer account -
+    service names, material streams, equipment/container details, and
+    pricing - plus today's service execution plan, completed-service status
+    and history, next scheduled pickup date, and estimated truck arrival
+    time (ETA) for an in-progress service.
+- aid: wm:wm-service-operations-materials-api
+  name: WM Service Operations & Materials API
+  tags:
+  - Routing
+  - Materials
+  - Hauling
+  - Operations
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://api.wm.com/serviceoperations/
+  baseURL: https://api.wm.com/v1
+  properties:
+  - url: https://api.wm.com/serviceoperations/
+    type: APIReference
+  - url: https://api.wm.com/servicematerial/
+    type: APIReference
+  - url: openapi/wm-openapi.yml
+    type: OpenAPI
+  description: Retrieve routing information for a service, including the day
+    of week it is serviced, and hauling material information (material code,
+    name, special-handling and manifest flags) for all services on an
+    account.
+- aid: wm:wm-service-pricing-api
+  name: WM Service Pricing API
+  tags:
+  - Pricing
+  - Fees
+  - Rates
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://api.wm.com/serviceprice/
+  baseURL: https://api.wm.com/v1
+  properties:
+  - url: https://api.wm.com/serviceprice/
+    type: APIReference
+  - url: openapi/wm-openapi.yml
+    type: OpenAPI
+  description: Retrieve the base monthly rates for an account's services and
+    the invoice fee schedule (disposal rate type/amount and other line-item
+    fees) applied to those services.
+- aid: wm:wm-invoices-balance-api
+  name: WM Invoices & Balance API
+  tags:
+  - Invoicing
+  - Billing
+  - Balance
+  - Payments
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://api.wm.com/InvoiceS/index.html
+  baseURL: https://api.wm.com/v1
+  properties:
+  - url: https://api.wm.com/InvoiceS/index.html
+    type: APIReference
+  - url: https://api.wm.com/balance/index.html
+    type: APIReference
+  - url: openapi/wm-openapi.yml
+    type: OpenAPI
+  description: Retrieve invoice history (invoice id, date, amount, payment
+    information, remaining balance) and the current aging balance due on an
+    account, broken out by Current, 30/60/90/120-day, and Future buckets,
+    plus the last payment amount and date.
+- aid: wm:wm-profiles-preferences-api
+  name: WM Profiles & Preferences API
+  tags:
+  - Profiles
+  - Preferences
+  - Paperless Billing
+  - Auto Pay
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://api.wm.com/profiles/index.html
+  baseURL: https://api.wm.com/v1
+  properties:
+  - url: https://api.wm.com/profiles/index.html
+    type: APIReference
+  - url: https://api.wm.com/preferences_overview/index.html
+    type: Documentation
+  - url: https://api.wm.com/preferences_get/index.html
+    type: APIReference
+  - url: https://api.wm.com/preferences_put/index.html
+    type: APIReference
+  - url: https://api.wm.com/preferencescategories/index.html
+    type: APIReference
+  - url: openapi/wm-openapi.yml
+    type: OpenAPI
+  description: Retrieve paperless billing and auto-pay settings plus WM.com
+    login status established at signup, and retrieve or update account
+    communication preferences against the published preference categories.
+- aid: wm:wm-contacts-api
+  name: WM Contacts API
+  tags:
+  - Contacts
+  - Account Management
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://api.wm.com/contactsoverview/index.html
+  baseURL: https://api.wm.com/v1
+  properties:
+  - url: https://api.wm.com/contactsoverview/index.html
+    type: Documentation
+  - url: https://api.wm.com/Contactbilling/index.html
+    type: APIReference
+  - url: openapi/wm-openapi.yml
+    type: OpenAPI
+  description: Retrieve service and billing contact information (name, phone,
+    fax, email, address) on file for an account, and update service or
+    billing contact details.
+- aid: wm:wm-cases-tickets-api
+  name: WM Cases & Tickets API
+  tags:
+  - Cases
+  - Tickets
+  - Support
+  - Missed Pickup
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://api.wm.com/cases/index.html
+  baseURL: https://api.wm.com/v1
+  properties:
+  - url: https://api.wm.com/cases/index.html
+    type: APIReference
+  - url: https://api.wm.com/caseid/index.html
+    type: APIReference
+  - url: https://api.wm.com/tickets/index.html
+    type: APIReference
+  - url: https://api.wm.com/ticketd/index.html
+    type: APIReference
+  - url: openapi/wm-openapi.yml
+    type: OpenAPI
+  description: List service cases (id, description, category, request
+    date/time, status) and case detail, and list and retrieve detail for
+    tickets - such as missed-pickup or extra-pickup requests - created
+    against an account over a given date range.
+- aid: wm:wm-activities-api
+  name: WM Activities API
+  tags:
+  - Activities
+  - Notes
+  - Communications
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://api.wm.com/activitiesoverview/index.html
+  baseURL: https://api.wm.com/v1
+  properties:
+  - url: https://api.wm.com/activitiesoverview/index.html
+    type: Documentation
+  - url: https://api.wm.com/notes/index.html
+    type: APIReference
+  - url: https://api.wm.com/email/index.html
+    type: APIReference
+  - url: https://api.wm.com/issues/index.html
+    type: APIReference
+  - url: openapi/wm-openapi.yml
+    type: OpenAPI
+  description: Retrieve special servicing instructions and account notes,
+    system-generated or CSR-sent email communications, and portal-created
+    issue requests for an account over a given date range.
+common:
+- type: Website
+  url: https://www.wm.com
+- type: Documentation
+  url: https://api.wm.com/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/waste-management
+- type: Plans
+  url: plans/wm-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/wm-rate-limits.yml
+- type: FinOps
+  url: finops/wm-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

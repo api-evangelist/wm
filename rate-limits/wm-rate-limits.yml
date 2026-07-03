@@ -1,0 +1,45 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: WM
+providerId: wm
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- Waste Management
+- Enterprise
+- Rate Limiting
+- Quotas
+description: >-
+  WM's published API documentation (portal overview, authentication/security
+  page, and release notes) does not disclose numeric rate limits, request
+  quotas, or throttling behavior for the Customer API. Because access is
+  granted case-by-case per partner/customer via a WM-issued ClientId and
+  JWT, it is likely any throughput ceilings are negotiated or enforced
+  per-ClientId rather than published as a general policy, but this is not
+  confirmed in the public documentation.
+notes: >-
+  No numeric limits are documented as of the review date. Confirm any
+  per-ClientId throughput ceiling directly with apiaccess@wm.com during
+  onboarding.
+sources:
+- https://api.wm.com/
+- https://api.wm.com/authentication/
+- https://api.wm.com/releasenotes/index.html
+responseCodes:
+  throttled: not published
+limits:
+- name: Customer API Requests
+  scope: client
+  metric: requests
+  limit: not published
+  notes: No fixed numeric request-rate limit is documented for any api.wm.com resource.
+policies:
+- name: Credentialed Access Only
+  description: Every request requires an Authorization Bearer JWT and a WM-issued ClientId header; there is no anonymous or self-serve tier to rate-limit.
+- name: Request Tracking
+  description: Every request must include a Request-Tracking-Id header, which WM echoes back - useful for correlating and auditing call volume even though no public quota is documented.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

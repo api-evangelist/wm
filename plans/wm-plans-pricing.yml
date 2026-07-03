@@ -1,0 +1,65 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: WM
+providerId: wm
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- Waste Management
+- Enterprise
+- B2B
+- Plans
+description: >-
+  WM does not sell or price API access separately. The api.wm.com Customer
+  API is a free integration surface made available to WM's existing
+  commercial, industrial, and municipal waste/recycling service customers
+  and their integration partners, so they can pull the same account data
+  (services, pricing, invoices, balance, contacts, cases, tickets) shown in
+  the WM customer portal into their own systems. There is no self-serve
+  signup, no published per-call or per-tier price list, and no free trial
+  key - access is granted case-by-case after WM reviews a request sent to
+  apiaccess@wm.com describing the integration and the resources needed.
+  The underlying waste hauling, recycling, and disposal services are priced
+  and contracted separately through WM's commercial sales process, entirely
+  outside of the API.
+notes: >-
+  Because there is no public pricing page for the API itself, no plan tiers,
+  quotas, or per-unit rates are reconciled here. This reflects WM's actual
+  published access model rather than a gap in research.
+sources:
+- https://api.wm.com/
+- https://api.wm.com/authentication/
+- https://www.wm.com
+plans:
+- id: wm-partner-access
+  name: Partner / Customer API Access
+  type: enterprise
+  description: >-
+    The only access model WM documents. An existing or prospective
+    commercial/enterprise waste-service customer, or an integration partner
+    acting on their behalf, emails apiaccess@wm.com describing the
+    integration and requested resources. WM issues a ClientId and JWT
+    credentials for approved requests; there is no published fee for API
+    access itself.
+  entries:
+  - label: API Access
+    name: partner_access
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: north-america
+    unit: 1
+    price: no separate charge; contact apiaccess@wm.com
+    userMultiplied: false
+  elements:
+  - name: Services Data
+  - name: Invoices and Balance
+  - name: Contacts, Cases, and Tickets
+  - name: JWT / ClientId Credentials
+  - name: Test Environment (apitest.wm.com)
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

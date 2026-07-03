@@ -1,0 +1,674 @@
+{
+    "opencollection": "1.0.0",
+    "info": {
+        "name": "WM Customer API",
+        "version": "1.0"
+    },
+    "request": {
+        "auth": {
+            "type": "bearer",
+            "token": "{{bearerToken}}"
+        }
+    },
+    "items": [
+        {
+            "info": {
+                "name": "Services",
+                "type": "folder"
+            },
+            "items": [
+                {
+                    "info": {
+                        "name": "List services",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/services",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            },
+                            {
+                                "name": "line_of_business",
+                                "value": "",
+                                "type": "query",
+                                "description": "Filter by line of business."
+                            }
+                        ]
+                    },
+                    "docs": "Retrieve detailed information on the services associated with an account, including service names, material streams, container volumes, and pricing structures, plus the status of services scheduled for today."
+                },
+                {
+                    "info": {
+                        "name": "List planned services",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/services/plan",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            }
+                        ]
+                    },
+                    "docs": "Obtain service execution details for today's scheduled services."
+                },
+                {
+                    "info": {
+                        "name": "List service statistics",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/services/stats",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            }
+                        ]
+                    },
+                    "docs": "Access the status and details of completed services - whether a scheduled service has not yet occurred, completed successfully, or had a problem."
+                },
+                {
+                    "info": {
+                        "name": "List next pickup",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/services/next-pickup",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            }
+                        ]
+                    },
+                    "docs": "View the next scheduled pickup date for the account's services."
+                },
+                {
+                    "info": {
+                        "name": "Get service ETA",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/services/:serviceId/eta",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            },
+                            {
+                                "name": "serviceId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique service identifier."
+                            }
+                        ]
+                    },
+                    "docs": "Retrieve the estimated truck arrival time (ETA) for a service in progress today."
+                }
+            ]
+        },
+        {
+            "info": {
+                "name": "Service Operations & Materials",
+                "type": "folder"
+            },
+            "items": [
+                {
+                    "info": {
+                        "name": "List service operations",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/services/operations",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            }
+                        ]
+                    },
+                    "docs": "Obtain routing information for the account's services, including the day of week serviced."
+                },
+                {
+                    "info": {
+                        "name": "List service materials",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/services/materials",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            }
+                        ]
+                    },
+                    "docs": "Access hauling material information for all of the account's services."
+                }
+            ]
+        },
+        {
+            "info": {
+                "name": "Service Pricing",
+                "type": "folder"
+            },
+            "items": [
+                {
+                    "info": {
+                        "name": "List service prices",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/services/prices",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            }
+                        ]
+                    },
+                    "docs": "Retrieve the base monthly rates for the account's services."
+                },
+                {
+                    "info": {
+                        "name": "List invoice fees",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/services/prices/invoice-fees",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            }
+                        ]
+                    },
+                    "docs": "Retrieve invoice fee information associated with the account's services."
+                }
+            ]
+        },
+        {
+            "info": {
+                "name": "Invoices & Balance",
+                "type": "folder"
+            },
+            "items": [
+                {
+                    "info": {
+                        "name": "List invoices",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/invoices",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            }
+                        ]
+                    },
+                    "docs": "Retrieve invoice history for the account - invoice id, date, amount, payment information, and remaining balance."
+                },
+                {
+                    "info": {
+                        "name": "Get invoice details",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/invoices/:invoiceId",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            },
+                            {
+                                "name": "invoiceId",
+                                "value": "",
+                                "type": "path",
+                                "description": ""
+                            }
+                        ]
+                    },
+                    "docs": "Retrieve details for a single invoice."
+                },
+                {
+                    "info": {
+                        "name": "Get account balance",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/balance",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            }
+                        ]
+                    },
+                    "docs": "Retrieve the balance due on the account, broken out by Current, 30/60/90/120-day, and Future aging buckets, plus the total balance, last payment amount, and last payment date."
+                }
+            ]
+        },
+        {
+            "info": {
+                "name": "Profiles & Preferences",
+                "type": "folder"
+            },
+            "items": [
+                {
+                    "info": {
+                        "name": "Get customer profile",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/profiles",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            }
+                        ]
+                    },
+                    "docs": "Retrieve paperless billing and automatic payment settings, and WM.com login status, established during account creation or updated through the WM portal."
+                },
+                {
+                    "info": {
+                        "name": "List communication preferences",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/communication-preferences",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            }
+                        ]
+                    },
+                    "docs": "Retrieve all communication preferences set on the account."
+                },
+                {
+                    "info": {
+                        "name": "Update communication preferences",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "PUT",
+                        "url": "https://api.wm.com/v1/customers/:customerId/communication-preferences",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            }
+                        ],
+                        "body": {
+                            "type": "json",
+                            "data": "{}"
+                        }
+                    },
+                    "docs": "Update one or more communication preferences on the account."
+                },
+                {
+                    "info": {
+                        "name": "List preference categories",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/preferences/categories"
+                    },
+                    "docs": "List the published communication preference categories available to set on an account."
+                }
+            ]
+        },
+        {
+            "info": {
+                "name": "Contacts",
+                "type": "folder"
+            },
+            "items": [
+                {
+                    "info": {
+                        "name": "List contacts",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/contacts",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            }
+                        ]
+                    },
+                    "docs": "Retrieve service and billing address and contact information on file for the account."
+                },
+                {
+                    "info": {
+                        "name": "Show billing contact",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/contacts/billing",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            }
+                        ]
+                    },
+                    "docs": "Retrieve the billing contact - name, work phone, mobile phone, fax, email, and address - on file for the account."
+                },
+                {
+                    "info": {
+                        "name": "Update billing contact",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "PUT",
+                        "url": "https://api.wm.com/v1/customers/:customerId/contacts/billing",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            }
+                        ],
+                        "body": {
+                            "type": "json",
+                            "data": "{}"
+                        }
+                    },
+                    "docs": "Update the billing contact details on file for the account."
+                },
+                {
+                    "info": {
+                        "name": "Update service contact",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "PUT",
+                        "url": "https://api.wm.com/v1/customers/:customerId/contacts/service",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            }
+                        ],
+                        "body": {
+                            "type": "json",
+                            "data": "{}"
+                        }
+                    },
+                    "docs": "Update the service contact details on file for the account."
+                }
+            ]
+        },
+        {
+            "info": {
+                "name": "Cases & Tickets",
+                "type": "folder"
+            },
+            "items": [
+                {
+                    "info": {
+                        "name": "List cases",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/cases",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            }
+                        ]
+                    },
+                    "docs": "List service cases on the account - id, description, category, request date/time, and status."
+                },
+                {
+                    "info": {
+                        "name": "Show case details",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/cases/:caseId",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            },
+                            {
+                                "name": "caseId",
+                                "value": "",
+                                "type": "path",
+                                "description": ""
+                            }
+                        ]
+                    },
+                    "docs": "Retrieve details for a single case."
+                },
+                {
+                    "info": {
+                        "name": "List tickets",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/tickets",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            },
+                            {
+                                "name": "fromDate",
+                                "value": "",
+                                "type": "query",
+                                "description": "Start date, yyyy-MM-dd."
+                            },
+                            {
+                                "name": "toDate",
+                                "value": "",
+                                "type": "query",
+                                "description": "End date, yyyy-MM-dd."
+                            }
+                        ]
+                    },
+                    "docs": "Retrieve a summary of tickets created on the account - such as missed-pickup or extra-pickup requests - within an optional date range."
+                },
+                {
+                    "info": {
+                        "name": "Show ticket details",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/tickets/:ticketId",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            },
+                            {
+                                "name": "ticketId",
+                                "value": "",
+                                "type": "path",
+                                "description": ""
+                            }
+                        ]
+                    },
+                    "docs": "Retrieve details for a single ticket, including disposal tickets."
+                }
+            ]
+        },
+        {
+            "info": {
+                "name": "Activities",
+                "type": "folder"
+            },
+            "items": [
+                {
+                    "info": {
+                        "name": "List notes",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/activities/notes",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            },
+                            {
+                                "name": "fromDate",
+                                "value": "",
+                                "type": "query",
+                                "description": "Start date, yyyy-MM-dd."
+                            },
+                            {
+                                "name": "toDate",
+                                "value": "",
+                                "type": "query",
+                                "description": "End date, yyyy-MM-dd."
+                            }
+                        ]
+                    },
+                    "docs": "Retrieve special instructions on how to service the account, and notes about the account, created by support agents or during setup, within an optional date range."
+                },
+                {
+                    "info": {
+                        "name": "List emails",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/activities/email",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            },
+                            {
+                                "name": "fromDate",
+                                "value": "",
+                                "type": "query",
+                                "description": "Start date, yyyy-MM-dd."
+                            },
+                            {
+                                "name": "toDate",
+                                "value": "",
+                                "type": "query",
+                                "description": "End date, yyyy-MM-dd."
+                            }
+                        ]
+                    },
+                    "docs": "Retrieve email communication sent from the WM portal - system generated or sent by a CSR agent - within an optional date range."
+                },
+                {
+                    "info": {
+                        "name": "List issues",
+                        "type": "http"
+                    },
+                    "http": {
+                        "method": "GET",
+                        "url": "https://api.wm.com/v1/customers/:customerId/activities/issues",
+                        "params": [
+                            {
+                                "name": "customerId",
+                                "value": "",
+                                "type": "path",
+                                "description": "Unique customer account identifier."
+                            },
+                            {
+                                "name": "fromDate",
+                                "value": "",
+                                "type": "query",
+                                "description": "Start date, yyyy-MM-dd."
+                            },
+                            {
+                                "name": "toDate",
+                                "value": "",
+                                "type": "query",
+                                "description": "End date, yyyy-MM-dd."
+                            }
+                        ]
+                    },
+                    "docs": "Retrieve requests/issues created against the account through the WM portal, within an optional date range."
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,91 @@
+aid: wm
+name: WM
+review:
+  question: Does WM expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-03'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was created. WM's published API documentation at
+    api.wm.com describes only synchronous request/response REST resources -
+    there is no documented WebSocket, Server-Sent Events, webhook, or other
+    asynchronous/streaming transport for any resource (services, pricing,
+    invoices, balance, profiles, preferences, contacts, cases, tickets, or
+    activities).
+findings:
+  summary: |
+    WM does not publish a documented public WebSocket API, and does not
+    publish a self-serve developer portal at all. The company's customer
+    integration surface is a partner/customer-gated REST API at
+    https://api.wm.com/v1 (test environment at https://apitest.wm.com/v1)
+    returning JSON (or optionally XML) over HTTPS. Access requires a
+    WM-issued ClientId and a JSON Web Token (JWT) Bearer token, obtained by
+    emailing apiaccess@wm.com - there is no open API key signup, no listed
+    SDKs, and no public GitHub organization publishing client libraries.
+    Every documented resource is a plain GET (with two documented PUT
+    update operations for contacts and communication preferences); no
+    endpoint documents a ws:// or wss:// upgrade, a push/webhook mechanism,
+    or an event stream.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.wm.com/v1
+      documented: true
+    - protocol: REST (test)
+      scheme: https
+      baseURL: https://apitest.wm.com/v1
+      documented: true
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in the api.wm.com reference for services, pricing, invoices, balance, profiles, preferences, contacts, cases, tickets, or activities.
+  endpointsConfirmedRest:
+    - GET /customers/{customerId}/services
+    - GET /customers/{customerId}/services/plan
+    - GET /customers/{customerId}/services/stats
+    - GET /customers/{customerId}/services/next-pickup
+    - GET /customers/{customerId}/services/{serviceId}/eta
+    - GET /customers/{customerId}/services/operations
+    - GET /customers/{customerId}/services/materials
+    - GET /customers/{customerId}/services/prices
+    - GET /customers/{customerId}/services/prices/invoice-fees
+    - GET /customers/{customerId}/invoices
+    - GET /customers/{customerId}/balance
+    - GET /customers/{customerId}/profiles
+    - GET /customers/{customerId}/communication-preferences
+    - PUT /customers/{customerId}/communication-preferences
+    - GET /preferences/categories
+    - GET /customers/{customerId}/contacts
+    - GET /customers/{customerId}/contacts/billing
+    - PUT /customers/{customerId}/contacts/billing
+    - PUT /customers/{customerId}/contacts/service
+    - GET /customers/{customerId}/cases
+    - GET /customers/{customerId}/cases/{caseId}
+    - GET /customers/{customerId}/tickets
+    - GET /customers/{customerId}/tickets/{ticketId}
+    - GET /customers/{customerId}/activities/notes
+    - GET /customers/{customerId}/activities/email
+    - GET /customers/{customerId}/activities/issues
+sources:
+  - url: https://api.wm.com/
+    type: Documentation
+    note: Portal overview - RESTful JSON/XML API, JWT authorization, no WebSocket mentioned.
+  - url: https://api.wm.com/authentication/
+    type: Documentation
+    note: Security page describes JWT Bearer auth, Request-Tracking-Id and ClientId headers; no WebSocket handshake described.
+  - url: https://api.wm.com/servicesoverview/index.html
+    type: Documentation
+    note: Lists all Services sub-resources as plain GET endpoints.
+  - url: https://api.wm.com/Services/index.html
+    type: APIReference
+    note: List services endpoint - GET only.
+  - url: https://api.wm.com/releasenotes/index.html
+    type: Documentation
+    note: Version history from initial 2017-03-28 release through 2018-03-08; every change adds a REST resource or method, never a streaming transport.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: false
+  reason: |
+    No WebSocket, SSE, or other asynchronous protocol surface exists or is
+    documented, so no AsyncAPI document was authored for this entry.
