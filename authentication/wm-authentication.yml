@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/wm-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: WM issues a JSON Web Token (JWT) and a ClientId to approved partners/customers.
+    Send the token in the Authorization header and the ClientId in the ClientId header on every
+    request.
+  sources:
+  - openapi/wm-openapi.yml

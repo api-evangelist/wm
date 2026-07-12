@@ -204,6 +204,10 @@ apis:
     system-generated or CSR-sent email communications, and portal-created
     issue requests for an account over a given date range.
 common:
+- type: DomainSecurity
+  url: security/wm-domain-security.yml
+- type: Authentication
+  url: authentication/wm-authentication.yml
 - type: Website
   url: https://www.wm.com
 - type: Documentation
