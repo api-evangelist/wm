@@ -204,6 +204,8 @@ apis:
     system-generated or CSR-sent email communications, and portal-created
     issue requests for an account over a given date range.
 common:
+- type: AgenticAccess
+  url: agentic-access/wm-agentic-access.yml
 - type: DomainSecurity
   url: security/wm-domain-security.yml
 - type: Authentication
