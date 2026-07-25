@@ -1,0 +1,155 @@
+openapi: 3.0.3
+info:
+  title: WM Customer Activities API
+  description: 'Documented, partner/customer-gated REST API published by WM (formerly Waste Management, Inc.) at https://api.wm.com/. Exposes account-level service, billing, and support data - service and pickup information, live status/ETA, routing and hauling materials, pricing, invoices and balance, communication preferences, contacts, cases, tickets, and account activity notes. There is no self-serve signup: WM issues a ClientId and JSON Web Token (JWT) to approved commercial/enterprise customers and integration partners on request to apiaccess@wm.com. Endpoint paths, parameters, and response fields below are transcribed from WM''s published API documentation; fields not disclosed in that documentation are left as an open JSON object rather than invented.'
+  version: '1.0'
+  contact:
+    name: WM API Access
+    email: apiaccess@wm.com
+    url: https://api.wm.com/
+  license:
+    name: Proprietary - partner/customer use per WM terms
+servers:
+- url: https://api.wm.com/v1
+  description: Production
+- url: https://apitest.wm.com/v1
+  description: Test
+security:
+- bearerAuth: []
+tags:
+- name: Activities
+  description: Notes, email, and issue activity on an account.
+paths:
+  /customers/{customerId}/activities/notes:
+    get:
+      operationId: listNotes
+      tags:
+      - Activities
+      summary: List notes
+      description: Retrieve special instructions on how to service the account, and notes about the account, created by support agents or during setup, within an optional date range.
+      parameters:
+      - $ref: '#/components/parameters/CustomerId'
+      - $ref: '#/components/parameters/FromDate'
+      - $ref: '#/components/parameters/ToDate'
+      responses:
+        '200':
+          description: Account notes.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  request_tracking_id:
+                    type: string
+                  activities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        note_info:
+                          type: object
+                          properties:
+                            comment:
+                              type: string
+                            created_date:
+                              type: string
+                              format: date-time
+                        audit_info:
+                          type: object
+                          properties:
+                            created_date:
+                              type: string
+                              format: date-time
+                            created_by:
+                              type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/activities/email:
+    get:
+      operationId: listEmailActivity
+      tags:
+      - Activities
+      summary: List emails
+      description: Retrieve email communication sent from the WM portal - system generated or sent by a CSR agent - within an optional date range.
+      parameters:
+      - $ref: '#/components/parameters/CustomerId'
+      - $ref: '#/components/parameters/FromDate'
+      - $ref: '#/components/parameters/ToDate'
+      responses:
+        '200':
+          description: Email activity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/activities/issues:
+    get:
+      operationId: listIssues
+      tags:
+      - Activities
+      summary: List issues
+      description: Retrieve requests/issues created against the account through the WM portal, within an optional date range.
+      parameters:
+      - $ref: '#/components/parameters/CustomerId'
+      - $ref: '#/components/parameters/FromDate'
+      - $ref: '#/components/parameters/ToDate'
+      responses:
+        '200':
+          description: Issue activity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    FromDate:
+      name: fromDate
+      in: query
+      required: false
+      description: Start date, yyyy-MM-dd.
+      schema:
+        type: string
+        format: date
+    ToDate:
+      name: toDate
+      in: query
+      required: false
+      description: End date, yyyy-MM-dd.
+      schema:
+        type: string
+        format: date
+    CustomerId:
+      name: customerId
+      in: path
+      required: true
+      description: Unique customer account identifier.
+      schema:
+        type: integer
+  responses:
+    Unauthorized:
+      description: Missing or invalid Authorization/ClientId.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+  schemas:
+    GenericAccountResponse:
+      type: object
+      description: WM's published documentation does not disclose full response field detail for this resource; the response is a JSON object scoped to the requesting customer account.
+      properties:
+        request_tracking_id:
+          type: string
+      additionalProperties: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: WM issues a JSON Web Token (JWT) and a ClientId to approved partners/customers. Send the token in the Authorization header and the ClientId in the ClientId header on every request.

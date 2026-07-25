@@ -1,0 +1,158 @@
+openapi: 3.0.3
+info:
+  title: WM Customer Activities Contacts API
+  description: 'Documented, partner/customer-gated REST API published by WM (formerly Waste Management, Inc.) at https://api.wm.com/. Exposes account-level service, billing, and support data - service and pickup information, live status/ETA, routing and hauling materials, pricing, invoices and balance, communication preferences, contacts, cases, tickets, and account activity notes. There is no self-serve signup: WM issues a ClientId and JSON Web Token (JWT) to approved commercial/enterprise customers and integration partners on request to apiaccess@wm.com. Endpoint paths, parameters, and response fields below are transcribed from WM''s published API documentation; fields not disclosed in that documentation are left as an open JSON object rather than invented.'
+  version: '1.0'
+  contact:
+    name: WM API Access
+    email: apiaccess@wm.com
+    url: https://api.wm.com/
+  license:
+    name: Proprietary - partner/customer use per WM terms
+servers:
+- url: https://api.wm.com/v1
+  description: Production
+- url: https://apitest.wm.com/v1
+  description: Test
+security:
+- bearerAuth: []
+tags:
+- name: Contacts
+  description: Billing and service contacts on an account.
+paths:
+  /customers/{customerId}/contacts:
+    get:
+      operationId: listContacts
+      tags:
+      - Contacts
+      summary: List contacts
+      description: Retrieve service and billing address and contact information on file for the account.
+      parameters:
+      - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Contact information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/contacts/billing:
+    get:
+      operationId: getBillingContact
+      tags:
+      - Contacts
+      summary: Show billing contact
+      description: Retrieve the billing contact - name, work phone, mobile phone, fax, email, and address - on file for the account.
+      parameters:
+      - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Billing contact.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    put:
+      operationId: updateBillingContact
+      tags:
+      - Contacts
+      summary: Update billing contact
+      description: Update the billing contact details on file for the account.
+      parameters:
+      - $ref: '#/components/parameters/CustomerId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contact'
+      responses:
+        '200':
+          description: Updated billing contact.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/contacts/service:
+    put:
+      operationId: updateServiceContact
+      tags:
+      - Contacts
+      summary: Update service contact
+      description: Update the service contact details on file for the account.
+      parameters:
+      - $ref: '#/components/parameters/CustomerId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contact'
+      responses:
+        '200':
+          description: Updated service contact.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    GenericAccountResponse:
+      type: object
+      description: WM's published documentation does not disclose full response field detail for this resource; the response is a JSON object scoped to the requesting customer account.
+      properties:
+        request_tracking_id:
+          type: string
+      additionalProperties: true
+    Contact:
+      type: object
+      properties:
+        name:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        work_phone:
+          type: string
+        mobile_phone:
+          type: string
+        fax:
+          type: string
+        email:
+          type: string
+        address:
+          type: object
+          additionalProperties: true
+  responses:
+    Unauthorized:
+      description: Missing or invalid Authorization/ClientId.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+  parameters:
+    CustomerId:
+      name: customerId
+      in: path
+      required: true
+      description: Unique customer account identifier.
+      schema:
+        type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: WM issues a JSON Web Token (JWT) and a ClientId to approved partners/customers. Send the token in the Authorization header and the ClientId in the ClientId header on every request.

@@ -1,0 +1,229 @@
+openapi: 3.0.3
+info:
+  title: WM Customer Activities Services API
+  description: 'Documented, partner/customer-gated REST API published by WM (formerly Waste Management, Inc.) at https://api.wm.com/. Exposes account-level service, billing, and support data - service and pickup information, live status/ETA, routing and hauling materials, pricing, invoices and balance, communication preferences, contacts, cases, tickets, and account activity notes. There is no self-serve signup: WM issues a ClientId and JSON Web Token (JWT) to approved commercial/enterprise customers and integration partners on request to apiaccess@wm.com. Endpoint paths, parameters, and response fields below are transcribed from WM''s published API documentation; fields not disclosed in that documentation are left as an open JSON object rather than invented.'
+  version: '1.0'
+  contact:
+    name: WM API Access
+    email: apiaccess@wm.com
+    url: https://api.wm.com/
+  license:
+    name: Proprietary - partner/customer use per WM terms
+servers:
+- url: https://api.wm.com/v1
+  description: Production
+- url: https://apitest.wm.com/v1
+  description: Test
+security:
+- bearerAuth: []
+tags:
+- name: Services
+  description: Account services, schedule, status, and ETA.
+paths:
+  /customers/{customerId}/services:
+    get:
+      operationId: listServices
+      tags:
+      - Services
+      summary: List services
+      description: Retrieve detailed information on the services associated with an account, including service names, material streams, container volumes, and pricing structures, plus the status of services scheduled for today.
+      parameters:
+      - $ref: '#/components/parameters/CustomerId'
+      - name: line_of_business
+        in: query
+        required: false
+        description: Filter by line of business.
+        schema:
+          type: string
+          enum:
+          - RESIDENTIAL
+          - COMMERCIAL
+          - ROLLOFF
+      responses:
+        '200':
+          description: Services for the account.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  request_tracking_id:
+                    type: string
+                  services:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Service'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/services/plan:
+    get:
+      operationId: getServicePlan
+      tags:
+      - Services
+      summary: List planned services
+      description: Obtain service execution details for today's scheduled services.
+      parameters:
+      - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Today's planned service execution details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/services/stats:
+    get:
+      operationId: getServiceStats
+      tags:
+      - Services
+      summary: List service statistics
+      description: Access the status and details of completed services - whether a scheduled service has not yet occurred, completed successfully, or had a problem.
+      parameters:
+      - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Completed-service status and details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/services/next-pickup:
+    get:
+      operationId: getNextPickup
+      tags:
+      - Services
+      summary: List next pickup
+      description: View the next scheduled pickup date for the account's services.
+      parameters:
+      - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Next scheduled pickup information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/services/{serviceId}/eta:
+    get:
+      operationId: getServiceEta
+      tags:
+      - Services
+      summary: Get service ETA
+      description: Retrieve the estimated truck arrival time (ETA) for a service in progress today.
+      parameters:
+      - $ref: '#/components/parameters/CustomerId'
+      - name: serviceId
+        in: path
+        required: true
+        description: Unique service identifier.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Estimated arrival time for the service.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    GenericAccountResponse:
+      type: object
+      description: WM's published documentation does not disclose full response field detail for this resource; the response is a JSON object scoped to the requesting customer account.
+      properties:
+        request_tracking_id:
+          type: string
+      additionalProperties: true
+    Service:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        occurs:
+          type: string
+        taxable:
+          type: boolean
+        type_code:
+          type: string
+        enterprise_catalog:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            category:
+              type: string
+            subcategory:
+              type: string
+            line_of_business:
+              type: string
+        material:
+          type: object
+          properties:
+            code:
+              type: string
+            name:
+              type: string
+            special_handling:
+              type: boolean
+            manifest:
+              type: boolean
+        equipment:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            volume:
+              type: number
+            unit_of_measure:
+              type: string
+            container_count:
+              type: integer
+        pricing:
+          type: object
+          properties:
+            base_monthly_cost:
+              type: number
+            disposal_rate_type:
+              type: string
+            disposal_rate_amount:
+              type: number
+            currency_code:
+              type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid Authorization/ClientId.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+  parameters:
+    CustomerId:
+      name: customerId
+      in: path
+      required: true
+      description: Unique customer account identifier.
+      schema:
+        type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: WM issues a JSON Web Token (JWT) and a ClientId to approved partners/customers. Send the token in the Authorization header and the ClientId in the ClientId header on every request.
