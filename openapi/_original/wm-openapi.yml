@@ -1,0 +1,818 @@
+openapi: 3.0.3
+info:
+  title: WM Customer API
+  description: >-
+    Documented, partner/customer-gated REST API published by WM (formerly
+    Waste Management, Inc.) at https://api.wm.com/. Exposes account-level
+    service, billing, and support data - service and pickup information,
+    live status/ETA, routing and hauling materials, pricing, invoices and
+    balance, communication preferences, contacts, cases, tickets, and account
+    activity notes. There is no self-serve signup: WM issues a ClientId and
+    JSON Web Token (JWT) to approved commercial/enterprise customers and
+    integration partners on request to apiaccess@wm.com. Endpoint paths,
+    parameters, and response fields below are transcribed from WM's published
+    API documentation; fields not disclosed in that documentation are left
+    as an open JSON object rather than invented.
+  version: '1.0'
+  contact:
+    name: WM API Access
+    email: apiaccess@wm.com
+    url: https://api.wm.com/
+  license:
+    name: Proprietary - partner/customer use per WM terms
+servers:
+  - url: https://api.wm.com/v1
+    description: Production
+  - url: https://apitest.wm.com/v1
+    description: Test
+security:
+  - bearerAuth: []
+tags:
+  - name: Services
+    description: Account services, schedule, status, and ETA.
+  - name: Service Operations & Materials
+    description: Routing and hauling material information.
+  - name: Service Pricing
+    description: Base rates and invoice fees.
+  - name: Invoices & Balance
+    description: Invoice history and account balance.
+  - name: Profiles & Preferences
+    description: Account profile settings and communication preferences.
+  - name: Contacts
+    description: Billing and service contacts on an account.
+  - name: Cases & Tickets
+    description: Service cases and pickup tickets.
+  - name: Activities
+    description: Notes, email, and issue activity on an account.
+paths:
+  /customers/{customerId}/services:
+    get:
+      operationId: listServices
+      tags: [Services]
+      summary: List services
+      description: >-
+        Retrieve detailed information on the services associated with an
+        account, including service names, material streams, container
+        volumes, and pricing structures, plus the status of services
+        scheduled for today.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+        - name: line_of_business
+          in: query
+          required: false
+          description: Filter by line of business.
+          schema:
+            type: string
+            enum: [RESIDENTIAL, COMMERCIAL, ROLLOFF]
+      responses:
+        '200':
+          description: Services for the account.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  request_tracking_id:
+                    type: string
+                  services:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Service'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/services/plan:
+    get:
+      operationId: getServicePlan
+      tags: [Services]
+      summary: List planned services
+      description: Obtain service execution details for today's scheduled services.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Today's planned service execution details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/services/stats:
+    get:
+      operationId: getServiceStats
+      tags: [Services]
+      summary: List service statistics
+      description: >-
+        Access the status and details of completed services - whether a
+        scheduled service has not yet occurred, completed successfully, or
+        had a problem.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Completed-service status and details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/services/next-pickup:
+    get:
+      operationId: getNextPickup
+      tags: [Services]
+      summary: List next pickup
+      description: View the next scheduled pickup date for the account's services.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Next scheduled pickup information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/services/{serviceId}/eta:
+    get:
+      operationId: getServiceEta
+      tags: [Services]
+      summary: Get service ETA
+      description: Retrieve the estimated truck arrival time (ETA) for a service in progress today.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+        - name: serviceId
+          in: path
+          required: true
+          description: Unique service identifier.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Estimated arrival time for the service.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/services/operations:
+    get:
+      operationId: listServiceOperations
+      tags: [Service Operations & Materials]
+      summary: List service operations
+      description: Obtain routing information for the account's services, including the day of week serviced.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Routing/operations information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/services/materials:
+    get:
+      operationId: listServiceMaterials
+      tags: [Service Operations & Materials]
+      summary: List service materials
+      description: Access hauling material information for all of the account's services.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Hauling material information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/services/prices:
+    get:
+      operationId: listServicePrices
+      tags: [Service Pricing]
+      summary: List service prices
+      description: Retrieve the base monthly rates for the account's services.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Service pricing information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/services/prices/invoice-fees:
+    get:
+      operationId: listInvoiceFees
+      tags: [Service Pricing]
+      summary: List invoice fees
+      description: Retrieve invoice fee information associated with the account's services.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Invoice fee information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/invoices:
+    get:
+      operationId: listInvoices
+      tags: [Invoices & Balance]
+      summary: List invoices
+      description: Retrieve invoice history for the account - invoice id, date, amount, payment information, and remaining balance.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Invoice history.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  currency:
+                    type: string
+                  invoices:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/invoices/{invoiceId}:
+    get:
+      operationId: getInvoice
+      tags: [Invoices & Balance]
+      summary: Get invoice details
+      description: Retrieve details for a single invoice.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Invoice detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/balance:
+    get:
+      operationId: getBalance
+      tags: [Invoices & Balance]
+      summary: Get account balance
+      description: >-
+        Retrieve the balance due on the account, broken out by Current,
+        30/60/90/120-day, and Future aging buckets, plus the total balance,
+        last payment amount, and last payment date.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Account balance.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  currency:
+                    type: string
+                  last_payment_amount:
+                    type: number
+                  last_payment_date:
+                    type: string
+                    format: date
+                  balances:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          enum: [Current, 30Day, 60Day, 90Day, 120Day, Future, Total]
+                        date:
+                          type: string
+                          format: date
+                        amount:
+                          type: number
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/profiles:
+    get:
+      operationId: getProfile
+      tags: [Profiles & Preferences]
+      summary: Get customer profile
+      description: >-
+        Retrieve paperless billing and automatic payment settings, and
+        WM.com login status, established during account creation or updated
+        through the WM portal.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Profile settings.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  profiles:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Profile'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/communication-preferences:
+    get:
+      operationId: getCommunicationPreferences
+      tags: [Profiles & Preferences]
+      summary: List communication preferences
+      description: Retrieve all communication preferences set on the account.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Communication preferences.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    put:
+      operationId: updateCommunicationPreferences
+      tags: [Profiles & Preferences]
+      summary: Update communication preferences
+      description: Update one or more communication preferences on the account.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: Updated communication preferences.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /preferences/categories:
+    get:
+      operationId: listPreferenceCategories
+      tags: [Profiles & Preferences]
+      summary: List preference categories
+      description: List the published communication preference categories available to set on an account.
+      responses:
+        '200':
+          description: Preference categories.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/contacts:
+    get:
+      operationId: listContacts
+      tags: [Contacts]
+      summary: List contacts
+      description: Retrieve service and billing address and contact information on file for the account.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Contact information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/contacts/billing:
+    get:
+      operationId: getBillingContact
+      tags: [Contacts]
+      summary: Show billing contact
+      description: Retrieve the billing contact - name, work phone, mobile phone, fax, email, and address - on file for the account.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Billing contact.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    put:
+      operationId: updateBillingContact
+      tags: [Contacts]
+      summary: Update billing contact
+      description: Update the billing contact details on file for the account.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contact'
+      responses:
+        '200':
+          description: Updated billing contact.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/contacts/service:
+    put:
+      operationId: updateServiceContact
+      tags: [Contacts]
+      summary: Update service contact
+      description: Update the service contact details on file for the account.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contact'
+      responses:
+        '200':
+          description: Updated service contact.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/cases:
+    get:
+      operationId: listCases
+      tags: [Cases & Tickets]
+      summary: List cases
+      description: List service cases on the account - id, description, category, request date/time, and status.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Cases on the account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/cases/{caseId}:
+    get:
+      operationId: getCase
+      tags: [Cases & Tickets]
+      summary: Show case details
+      description: Retrieve details for a single case.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+        - name: caseId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Case detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/tickets:
+    get:
+      operationId: listTickets
+      tags: [Cases & Tickets]
+      summary: List tickets
+      description: >-
+        Retrieve a summary of tickets created on the account - such as
+        missed-pickup or extra-pickup requests - within an optional date
+        range.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+        - $ref: '#/components/parameters/FromDate'
+        - $ref: '#/components/parameters/ToDate'
+      responses:
+        '200':
+          description: Tickets on the account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/tickets/{ticketId}:
+    get:
+      operationId: getTicket
+      tags: [Cases & Tickets]
+      summary: Show ticket details
+      description: Retrieve details for a single ticket, including disposal tickets.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+        - name: ticketId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ticket detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/activities/notes:
+    get:
+      operationId: listNotes
+      tags: [Activities]
+      summary: List notes
+      description: >-
+        Retrieve special instructions on how to service the account, and
+        notes about the account, created by support agents or during setup,
+        within an optional date range.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+        - $ref: '#/components/parameters/FromDate'
+        - $ref: '#/components/parameters/ToDate'
+      responses:
+        '200':
+          description: Account notes.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  request_tracking_id:
+                    type: string
+                  activities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        note_info:
+                          type: object
+                          properties:
+                            comment:
+                              type: string
+                            created_date:
+                              type: string
+                              format: date-time
+                        audit_info:
+                          type: object
+                          properties:
+                            created_date:
+                              type: string
+                              format: date-time
+                            created_by:
+                              type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/activities/email:
+    get:
+      operationId: listEmailActivity
+      tags: [Activities]
+      summary: List emails
+      description: >-
+        Retrieve email communication sent from the WM portal - system
+        generated or sent by a CSR agent - within an optional date range.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+        - $ref: '#/components/parameters/FromDate'
+        - $ref: '#/components/parameters/ToDate'
+      responses:
+        '200':
+          description: Email activity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerId}/activities/issues:
+    get:
+      operationId: listIssues
+      tags: [Activities]
+      summary: List issues
+      description: Retrieve requests/issues created against the account through the WM portal, within an optional date range.
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+        - $ref: '#/components/parameters/FromDate'
+        - $ref: '#/components/parameters/ToDate'
+      responses:
+        '200':
+          description: Issue activity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        WM issues a JSON Web Token (JWT) and a ClientId to approved
+        partners/customers. Send the token in the Authorization header and
+        the ClientId in the ClientId header on every request.
+  parameters:
+    CustomerId:
+      name: customerId
+      in: path
+      required: true
+      description: Unique customer account identifier.
+      schema:
+        type: integer
+    FromDate:
+      name: fromDate
+      in: query
+      required: false
+      description: Start date, yyyy-MM-dd.
+      schema:
+        type: string
+        format: date
+    ToDate:
+      name: toDate
+      in: query
+      required: false
+      description: End date, yyyy-MM-dd.
+      schema:
+        type: string
+        format: date
+  headers:
+    RequestTrackingId:
+      description: Unique identifier for the request, echoed back in the response.
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid Authorization/ClientId.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+  schemas:
+    GenericAccountResponse:
+      type: object
+      description: >-
+        WM's published documentation does not disclose full response field
+        detail for this resource; the response is a JSON object scoped to
+        the requesting customer account.
+      properties:
+        request_tracking_id:
+          type: string
+      additionalProperties: true
+    Service:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        occurs:
+          type: string
+        taxable:
+          type: boolean
+        type_code:
+          type: string
+        enterprise_catalog:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            category:
+              type: string
+            subcategory:
+              type: string
+            line_of_business:
+              type: string
+        material:
+          type: object
+          properties:
+            code:
+              type: string
+            name:
+              type: string
+            special_handling:
+              type: boolean
+            manifest:
+              type: boolean
+        equipment:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            volume:
+              type: number
+            unit_of_measure:
+              type: string
+            container_count:
+              type: integer
+        pricing:
+          type: object
+          properties:
+            base_monthly_cost:
+              type: number
+            disposal_rate_type:
+              type: string
+            disposal_rate_amount:
+              type: number
+            currency_code:
+              type: string
+    Invoice:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          type: string
+          format: date
+        amount:
+          type: number
+        payment_info:
+          type: object
+          additionalProperties: true
+        balance_amount:
+          type: number
+    Profile:
+      type: object
+      properties:
+        id:
+          type: string
+        paperless_invoice:
+          type: boolean
+        auto_pay:
+          type: boolean
+        logon_status:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        last_login_date:
+          type: string
+          format: date-time
+    Contact:
+      type: object
+      properties:
+        name:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        work_phone:
+          type: string
+        mobile_phone:
+          type: string
+        fax:
+          type: string
+        email:
+          type: string
+        address:
+          type: object
+          additionalProperties: true

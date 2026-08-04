@@ -1,0 +1,28 @@
+{
+  "provider": "wm",
+  "sources": [
+    "wm-activities-api-openapi.yml",
+    "wm-cases-tickets-api-openapi.yml",
+    "wm-contacts-api-openapi.yml",
+    "wm-invoices-balance-api-openapi.yml",
+    "wm-profiles-preferences-api-openapi.yml",
+    "wm-service-operations-materials-api-openapi.yml",
+    "wm-service-pricing-api-openapi.yml",
+    "wm-services-api-openapi.yml"
+  ],
+  "outputs": [
+    "wm-activities-api-openapi.yml",
+    "wm-cases-tickets-api-openapi.yml",
+    "wm-contacts-api-openapi.yml",
+    "wm-invoices-balance-api-openapi.yml",
+    "wm-profiles-preferences-api-openapi.yml",
+    "wm-service-operations-materials-api-openapi.yml",
+    "wm-service-pricing-api-openapi.yml",
+    "wm-services-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
