@@ -41,7 +41,7 @@ tags:
 - B2B
 created: '2026-07-03'
 modified: '2026-07-03'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: wm:wm-activities-api
   name: WM Activities API
