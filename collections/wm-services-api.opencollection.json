@@ -1,0 +1,131 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WM Customer Activities Services API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Services",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List services",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.wm.com/v1/customers/:customerId/services",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique customer account identifier."
+              },
+              {
+                "name": "line_of_business",
+                "value": "",
+                "type": "query",
+                "description": "Filter by line of business."
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information on the services associated with an account, including service names, material streams, container volumes, and pricing structures, plus the status of services scheduled for today."
+        },
+        {
+          "info": {
+            "name": "List planned services",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.wm.com/v1/customers/:customerId/services/plan",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique customer account identifier."
+              }
+            ]
+          },
+          "docs": "Obtain service execution details for today's scheduled services."
+        },
+        {
+          "info": {
+            "name": "List service statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.wm.com/v1/customers/:customerId/services/stats",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique customer account identifier."
+              }
+            ]
+          },
+          "docs": "Access the status and details of completed services - whether a scheduled service has not yet occurred, completed successfully, or had a problem."
+        },
+        {
+          "info": {
+            "name": "List next pickup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.wm.com/v1/customers/:customerId/services/next-pickup",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique customer account identifier."
+              }
+            ]
+          },
+          "docs": "View the next scheduled pickup date for the account's services."
+        },
+        {
+          "info": {
+            "name": "Get service ETA",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.wm.com/v1/customers/:customerId/services/:serviceId/eta",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique customer account identifier."
+              },
+              {
+                "name": "serviceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique service identifier."
+              }
+            ]
+          },
+          "docs": "Retrieve the estimated truck arrival time (ETA) for a service in progress today."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

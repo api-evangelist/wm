@@ -1,0 +1,122 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WM Customer Activities Cases & Tickets API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cases & Tickets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List cases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.wm.com/v1/customers/:customerId/cases",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique customer account identifier."
+              }
+            ]
+          },
+          "docs": "List service cases on the account - id, description, category, request date/time, and status."
+        },
+        {
+          "info": {
+            "name": "Show case details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.wm.com/v1/customers/:customerId/cases/:caseId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique customer account identifier."
+              },
+              {
+                "name": "caseId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve details for a single case."
+        },
+        {
+          "info": {
+            "name": "List tickets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.wm.com/v1/customers/:customerId/tickets",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique customer account identifier."
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date, yyyy-MM-dd."
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "End date, yyyy-MM-dd."
+              }
+            ]
+          },
+          "docs": "Retrieve a summary of tickets created on the account - such as missed-pickup or extra-pickup requests - within an optional date range."
+        },
+        {
+          "info": {
+            "name": "Show ticket details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.wm.com/v1/customers/:customerId/tickets/:ticketId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique customer account identifier."
+              },
+              {
+                "name": "ticketId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve details for a single ticket, including disposal tickets."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

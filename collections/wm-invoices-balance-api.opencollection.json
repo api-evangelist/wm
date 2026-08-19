@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WM Customer Activities Invoices & Balance API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Invoices & Balance",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.wm.com/v1/customers/:customerId/invoices",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique customer account identifier."
+              }
+            ]
+          },
+          "docs": "Retrieve invoice history for the account - invoice id, date, amount, payment information, and remaining balance."
+        },
+        {
+          "info": {
+            "name": "Get invoice details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.wm.com/v1/customers/:customerId/invoices/:invoiceId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique customer account identifier."
+              },
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve details for a single invoice."
+        },
+        {
+          "info": {
+            "name": "Get account balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.wm.com/v1/customers/:customerId/balance",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique customer account identifier."
+              }
+            ]
+          },
+          "docs": "Retrieve the balance due on the account, broken out by Current, 30/60/90/120-day, and Future aging buckets, plus the total balance, last payment amount, and last payment date."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

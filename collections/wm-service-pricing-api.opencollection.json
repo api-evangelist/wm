@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WM Customer Activities Service Pricing API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Service Pricing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List service prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.wm.com/v1/customers/:customerId/services/prices",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique customer account identifier."
+              }
+            ]
+          },
+          "docs": "Retrieve the base monthly rates for the account's services."
+        },
+        {
+          "info": {
+            "name": "List invoice fees",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.wm.com/v1/customers/:customerId/services/prices/invoice-fees",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique customer account identifier."
+              }
+            ]
+          },
+          "docs": "Retrieve invoice fee information associated with the account's services."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

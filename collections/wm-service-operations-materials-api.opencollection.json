@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WM Customer Activities Service Operations & Materials API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Service Operations & Materials",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List service operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.wm.com/v1/customers/:customerId/services/operations",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique customer account identifier."
+              }
+            ]
+          },
+          "docs": "Obtain routing information for the account's services, including the day of week serviced."
+        },
+        {
+          "info": {
+            "name": "List service materials",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.wm.com/v1/customers/:customerId/services/materials",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique customer account identifier."
+              }
+            ]
+          },
+          "docs": "Access hauling material information for all of the account's services."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
