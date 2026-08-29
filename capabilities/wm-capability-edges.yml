@@ -1,0 +1,36 @@
+slug: wm
+provider: WM
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Transportation & Logistics
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Cases & Tickets
+  spec_file: wm-cases-tickets-api-openapi.yml
+  capability_id: BC-430.10
+  capability_id_l1: BC-430
+  capability_name: Customer Inquiry Management
+  confidence: 0.75
+  evidence: GET /customers/{customerId}/cases  listCases; GET /customers/{customerId}/tickets/{ticketId}  Show
+    ticket details
+  reason: Vendor description lists 'cases, tickets' among account-level support data; these operations
+    expose customer service case/ticket records, i.e. inbound inquiry handling.
+- tag: Invoices & Balance
+  spec_file: wm-invoices-balance-api-openapi.yml
+  capability_id: BC-200.30
+  capability_id_l1: BC-200
+  capability_name: Accounts Receivable Management
+  confidence: 0.72
+  evidence: GET /customers/{customerId}/invoices listInvoices; GET /customers/{customerId}/balance getBalance;
+    schema "Invoice"
+  reason: Exposes customer invoices and outstanding account balance, i.e. customer invoicing / receivable
+    position data. Mapped to Accounts Receivable Management rather than a transport-specific billing capability
+    since WM bills waste services, not freight movements per se.

@@ -488,6 +488,9 @@ apis:
   - type: APIReference
     url: https://api.wm.com/issues/index.html
 common:
+- type: CapabilityMap
+  url: capabilities/wm-capability-edges.yml
+  name: WM Business Capability Map
 - type: AgenticAccess
   url: agentic-access/wm-agentic-access.yml
 - type: DomainSecurity
