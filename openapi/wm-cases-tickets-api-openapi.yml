@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: WM Customer Activities Cases & Tickets API
-  description: 'Documented, partner/customer-gated REST API published by WM (formerly Waste Management, Inc.) at https://api.wm.com/. Exposes account-level service, billing, and support data - service and pickup information, live status/ETA, routing and hauling materials, pricing, invoices and balance, communication preferences, contacts, cases, tickets, and account activity notes. There is no self-serve signup: WM issues a ClientId and JSON Web Token (JWT) to approved commercial/enterprise customers and integration partners on request to apiaccess@wm.com. Endpoint paths, parameters, and response fields below are transcribed from WM''s published API documentation; fields not disclosed in that documentation are left as an open JSON object rather than invented.'
+  title: WM Customer Cases & Tickets API
+  description: Documented, partner/customer-gated REST API published by WM (formerly Waste Management, Inc.) at https://api.wm.com/.
   version: '1.0'
   contact:
     name: WM API Access
@@ -106,14 +106,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   parameters:
-    FromDate:
-      name: fromDate
-      in: query
-      required: false
-      description: Start date, yyyy-MM-dd.
-      schema:
-        type: string
-        format: date
     ToDate:
       name: toDate
       in: query
@@ -129,6 +121,14 @@ components:
       description: Unique customer account identifier.
       schema:
         type: integer
+    FromDate:
+      name: fromDate
+      in: query
+      required: false
+      description: Start date, yyyy-MM-dd.
+      schema:
+        type: string
+        format: date
   responses:
     Unauthorized:
       description: Missing or invalid Authorization/ClientId.

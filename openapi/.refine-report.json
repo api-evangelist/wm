@@ -1,14 +1,7 @@
 {
   "provider": "wm",
   "sources": [
-    "wm-activities-api-openapi.yml",
-    "wm-cases-tickets-api-openapi.yml",
-    "wm-contacts-api-openapi.yml",
-    "wm-invoices-balance-api-openapi.yml",
-    "wm-profiles-preferences-api-openapi.yml",
-    "wm-service-operations-materials-api-openapi.yml",
-    "wm-service-pricing-api-openapi.yml",
-    "wm-services-api-openapi.yml"
+    "_original/wm-openapi.yml"
   ],
   "outputs": [
     "wm-activities-api-openapi.yml",
@@ -23,6 +16,19 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "wm-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "wm-activities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "wm-cases-tickets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "wm-contacts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "wm-invoices-balance-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "wm-profiles-preferences-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "wm-service-operations-materials-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "wm-service-pricing-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "wm-services-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

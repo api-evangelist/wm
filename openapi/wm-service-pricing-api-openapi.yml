@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: WM Customer Activities Service Pricing API
-  description: 'Documented, partner/customer-gated REST API published by WM (formerly Waste Management, Inc.) at https://api.wm.com/. Exposes account-level service, billing, and support data - service and pickup information, live status/ETA, routing and hauling materials, pricing, invoices and balance, communication preferences, contacts, cases, tickets, and account activity notes. There is no self-serve signup: WM issues a ClientId and JSON Web Token (JWT) to approved commercial/enterprise customers and integration partners on request to apiaccess@wm.com. Endpoint paths, parameters, and response fields below are transcribed from WM''s published API documentation; fields not disclosed in that documentation are left as an open JSON object rather than invented.'
+  title: WM Customer Service Pricing API
+  description: Documented, partner/customer-gated REST API published by WM (formerly Waste Management, Inc.) at https://api.wm.com/.
   version: '1.0'
   contact:
     name: WM API Access
@@ -57,14 +57,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  schemas:
-    GenericAccountResponse:
-      type: object
-      description: WM's published documentation does not disclose full response field detail for this resource; the response is a JSON object scoped to the requesting customer account.
-      properties:
-        request_tracking_id:
-          type: string
-      additionalProperties: true
   responses:
     Unauthorized:
       description: Missing or invalid Authorization/ClientId.
@@ -75,6 +67,14 @@ components:
             properties:
               message:
                 type: string
+  schemas:
+    GenericAccountResponse:
+      type: object
+      description: WM's published documentation does not disclose full response field detail for this resource; the response is a JSON object scoped to the requesting customer account.
+      properties:
+        request_tracking_id:
+          type: string
+      additionalProperties: true
   parameters:
     CustomerId:
       name: customerId
