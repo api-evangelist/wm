@@ -57,14 +57,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  parameters:
-    CustomerId:
-      name: customerId
-      in: path
-      required: true
-      description: Unique customer account identifier.
-      schema:
-        type: integer
   schemas:
     GenericAccountResponse:
       type: object
@@ -73,6 +65,14 @@ components:
         request_tracking_id:
           type: string
       additionalProperties: true
+  parameters:
+    CustomerId:
+      name: customerId
+      in: path
+      required: true
+      description: Unique customer account identifier.
+      schema:
+        type: integer
   responses:
     Unauthorized:
       description: Missing or invalid Authorization/ClientId.

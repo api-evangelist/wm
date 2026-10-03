@@ -102,24 +102,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid Authorization/ClientId.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-  parameters:
-    CustomerId:
-      name: customerId
-      in: path
-      required: true
-      description: Unique customer account identifier.
-      schema:
-        type: integer
   schemas:
     GenericAccountResponse:
       type: object
@@ -148,6 +130,24 @@ components:
         last_login_date:
           type: string
           format: date-time
+  parameters:
+    CustomerId:
+      name: customerId
+      in: path
+      required: true
+      description: Unique customer account identifier.
+      schema:
+        type: integer
+  responses:
+    Unauthorized:
+      description: Missing or invalid Authorization/ClientId.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
   securitySchemes:
     bearerAuth:
       type: http

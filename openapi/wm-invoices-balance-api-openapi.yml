@@ -115,6 +115,14 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  parameters:
+    CustomerId:
+      name: customerId
+      in: path
+      required: true
+      description: Unique customer account identifier.
+      schema:
+        type: integer
   schemas:
     Invoice:
       type: object
@@ -131,14 +139,6 @@ components:
           additionalProperties: true
         balance_amount:
           type: number
-  parameters:
-    CustomerId:
-      name: customerId
-      in: path
-      required: true
-      description: Unique customer account identifier.
-      schema:
-        type: integer
   responses:
     Unauthorized:
       description: Missing or invalid Authorization/ClientId.

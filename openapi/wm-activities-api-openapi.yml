@@ -106,14 +106,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   parameters:
-    ToDate:
-      name: toDate
-      in: query
-      required: false
-      description: End date, yyyy-MM-dd.
-      schema:
-        type: string
-        format: date
     CustomerId:
       name: customerId
       in: path
@@ -129,14 +121,14 @@ components:
       schema:
         type: string
         format: date
-  schemas:
-    GenericAccountResponse:
-      type: object
-      description: WM's published documentation does not disclose full response field detail for this resource; the response is a JSON object scoped to the requesting customer account.
-      properties:
-        request_tracking_id:
-          type: string
-      additionalProperties: true
+    ToDate:
+      name: toDate
+      in: query
+      required: false
+      description: End date, yyyy-MM-dd.
+      schema:
+        type: string
+        format: date
   responses:
     Unauthorized:
       description: Missing or invalid Authorization/ClientId.
@@ -147,6 +139,14 @@ components:
             properties:
               message:
                 type: string
+  schemas:
+    GenericAccountResponse:
+      type: object
+      description: WM's published documentation does not disclose full response field detail for this resource; the response is a JSON object scoped to the requesting customer account.
+      properties:
+        request_tracking_id:
+          type: string
+      additionalProperties: true
   securitySchemes:
     bearerAuth:
       type: http
