@@ -65,14 +65,6 @@ components:
         request_tracking_id:
           type: string
       additionalProperties: true
-  parameters:
-    CustomerId:
-      name: customerId
-      in: path
-      required: true
-      description: Unique customer account identifier.
-      schema:
-        type: integer
   responses:
     Unauthorized:
       description: Missing or invalid Authorization/ClientId.
@@ -83,6 +75,14 @@ components:
             properties:
               message:
                 type: string
+  parameters:
+    CustomerId:
+      name: customerId
+      in: path
+      required: true
+      description: Unique customer account identifier.
+      schema:
+        type: integer
   securitySchemes:
     bearerAuth:
       type: http

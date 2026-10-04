@@ -134,14 +134,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  parameters:
-    CustomerId:
-      name: customerId
-      in: path
-      required: true
-      description: Unique customer account identifier.
-      schema:
-        type: integer
   schemas:
     GenericAccountResponse:
       type: object
@@ -221,6 +213,14 @@ components:
             properties:
               message:
                 type: string
+  parameters:
+    CustomerId:
+      name: customerId
+      in: path
+      required: true
+      description: Unique customer account identifier.
+      schema:
+        type: integer
   securitySchemes:
     bearerAuth:
       type: http
