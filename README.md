@@ -1,0 +1,233 @@
+# WM (wm)
+
+<!-- API-EVANGELIST-PROVENANCE:BEGIN -->
+> ### About this repository
+>
+> **This is not our API.** This repository is an independent, third-party profile of a company's
+> **publicly available** API surface, maintained by [API Evangelist](https://apievangelist.com).
+> API Evangelist does not operate, host, resell, or support this company's APIs, and is not
+> affiliated with or endorsed by the company unless stated on the profile.
+>
+> **Where the information came from.** Everything here is assembled from material a member of the
+> public can reach with a browser and no credentials — the company's own website, developer portal
+> and documentation, the specifications it publishes for public use (OpenAPI, AsyncAPI, JSON Schema,
+> `apis.json`, `llms.txt` and similar), its public repositories, and its public status, pricing and
+> changelog pages. **Nothing here is obtained by breaching a system, defeating an access control, or
+> using credentials of any kind.**
+>
+> **The rating is an independent assessment.** The Kin Score and Agent Readiness rating are
+> independently calculated scores of a company's *public* API artifacts, produced by API Evangelist
+> against a published rubric. They are not certifications, endorsements, security assessments, or
+> audits, and they score published artifacts — not the quality, safety, or security of the software.
+>
+> **Corrections, re-scores, and removal are free.** No partnership, contract, or purchase is
+> required, and you do not need to justify the request.
+>
+> - **Something wrong?** Open an issue on this repository, or email
+>   [info@apievangelist.com](mailto:info@apievangelist.com).
+> - **Published something new?** Ask for a re-score and we will re-run the rating.
+> - **Want the listing taken down?** Say so and we will honor it. The profile is reduced to your
+>   company name, a factual description, and a link to your own site, and the company is recorded as
+>   **unrated** — never scored zero for having asked.
+>
+> **Response times.** Acknowledgement within **one business day**; removal or restriction within
+> **two business days**; corrections and re-scores within **five business days**.
+>
+> **Not from the company, and here with a question?** You are welcome here — we would rather be the
+> front line and point you the right way than have a good report go nowhere. What this repository
+> can answer is narrow, though, so it is worth knowing who you are actually looking for:
+>
+> - **A question about how the API works, an account, billing, or a bug in the service** — that is
+>   the company's own support, not us. We profile this API; we do not operate it and cannot see
+>   your account.
+> - **A bug in an open-source project we only catalog** — file it on that project's own repository.
+>   This has happened with a real and correct bug report that reached us instead of the people who
+>   could fix it, which helped nobody.
+> - **Anything about this listing itself** — the description, the tags, the rating, a missing or
+>   wrong artifact — is ours. Open an issue here.
+> - **Not sure, or something general about API Evangelist or APIs.io** — open an issue on the
+>   [APIs.io Inbox](https://github.com/api-search/inbox) and we will route it.
+>
+> **This repository contains no software, and we will never ask you to download anything.** There is
+> no build, release, installer, or binary here — only text and machine-readable API descriptions, so
+> there is nothing here that can be "corrupt" or need "repairing". Any issue, comment, or email
+> claiming otherwise and offering a download link is not from us and is hostile. Do not follow the
+> link; it is a lure. Report it to GitHub and, if you like, tell us at
+> [info@apievangelist.com](mailto:info@apievangelist.com) so we can take it down.
+>
+> **On a security or compliance team?** Email
+> [info@apievangelist.com](mailto:info@apievangelist.com) with *security* in the subject line and
+> you will get a person, not a form. We will tell you exactly which public URLs this profile was
+> built from so your team can see the same surface we did, and we will take the listing down on
+> request while you work through it.
+>
+> Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
+<!-- API-EVANGELIST-PROVENANCE:END -->
+
+WM (formerly Waste Management, Inc.) is North America's largest integrated environmental solutions company, serving nearly 20 million municipal, commercial, industrial, and residential customers through collection, transfer, recycling, landfill, and waste-to-energy operations.
+
+**WM does not run a self-serve, publicly-signup developer platform.** It publishes a documented partner/customer REST API at [api.wm.com](https://api.wm.com/) covering account-level service and billing data - service details and pickup schedules, live service status and truck ETA, routing and hauling material information, pricing, invoices and aging balance, communication preferences, contacts, cases, tickets, and account activity notes. Access requires a WM-issued `ClientId` plus a JSON Web Token (JWT) and is granted on request to existing commercial/enterprise customers and integration partners by emailing [apiaccess@wm.com](mailto:apiaccess@wm.com); there is no open, self-serve API key signup.
+
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/wm/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/wm/refs/heads/main/apis.yml)
+
+## Tags
+
+- Waste Management
+- Recycling
+- Environmental Services
+- Field Services
+- Logistics
+- Account Management
+- Enterprise
+- B2B
+
+## Timestamps
+
+- **Created:** 2026-07-03
+- **Modified:** 2026-07-03
+
+## APIs
+
+### WM Services API
+
+Retrieve the services associated with a customer account - service names, material streams, equipment/container details, and pricing - plus today's service execution plan, completed-service status and history, next scheduled pickup date, and estimated truck arrival time (ETA) for an in-progress service.
+
+- **Human URL:** [https://api.wm.com/Services/index.html](https://api.wm.com/Services/index.html)
+- **Base URL:** `https://api.wm.com/v1`
+
+#### Properties
+
+- [Documentation](https://api.wm.com/servicesoverview/index.html)
+- [API Reference](https://api.wm.com/Services/index.html)
+- [OpenAPI](openapi/wm-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/wm.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/wm.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### WM Service Operations & Materials API
+
+Retrieve routing information for a service, including the day of week it is serviced, and hauling material information (material code, name, special-handling and manifest flags) for all services on an account.
+
+- **Human URL:** [https://api.wm.com/serviceoperations/](https://api.wm.com/serviceoperations/)
+- **Base URL:** `https://api.wm.com/v1`
+
+#### Properties
+
+- [API Reference](https://api.wm.com/serviceoperations/)
+- [API Reference](https://api.wm.com/servicematerial/)
+- [OpenAPI](openapi/wm-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/wm.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/wm.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### WM Service Pricing API
+
+Retrieve the base monthly rates for an account's services and the invoice fee schedule (disposal rate type/amount and other line-item fees) applied to those services.
+
+- **Human URL:** [https://api.wm.com/serviceprice/](https://api.wm.com/serviceprice/)
+- **Base URL:** `https://api.wm.com/v1`
+
+#### Properties
+
+- [API Reference](https://api.wm.com/serviceprice/)
+- [OpenAPI](openapi/wm-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/wm.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/wm.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### WM Invoices & Balance API
+
+Retrieve invoice history (invoice id, date, amount, payment information, remaining balance) and the current aging balance due on an account, broken out by Current, 30/60/90/120-day, and Future buckets, plus the last payment amount and date.
+
+- **Human URL:** [https://api.wm.com/InvoiceS/index.html](https://api.wm.com/InvoiceS/index.html)
+- **Base URL:** `https://api.wm.com/v1`
+
+#### Properties
+
+- [API Reference](https://api.wm.com/InvoiceS/index.html)
+- [API Reference](https://api.wm.com/balance/index.html)
+- [OpenAPI](openapi/wm-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/wm.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/wm.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### WM Profiles & Preferences API
+
+Retrieve paperless billing and auto-pay settings plus WM.com login status established at signup, and retrieve or update account communication preferences against the published preference categories.
+
+- **Human URL:** [https://api.wm.com/profiles/index.html](https://api.wm.com/profiles/index.html)
+- **Base URL:** `https://api.wm.com/v1`
+
+#### Properties
+
+- [Documentation](https://api.wm.com/preferences_overview/index.html)
+- [API Reference](https://api.wm.com/profiles/index.html)
+- [API Reference](https://api.wm.com/preferences_get/index.html)
+- [API Reference](https://api.wm.com/preferences_put/index.html)
+- [API Reference](https://api.wm.com/preferencescategories/index.html)
+- [OpenAPI](openapi/wm-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/wm.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/wm.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### WM Contacts API
+
+Retrieve service and billing contact information (name, phone, fax, email, address) on file for an account, and update service or billing contact details.
+
+- **Human URL:** [https://api.wm.com/contactsoverview/index.html](https://api.wm.com/contactsoverview/index.html)
+- **Base URL:** `https://api.wm.com/v1`
+
+#### Properties
+
+- [Documentation](https://api.wm.com/contactsoverview/index.html)
+- [API Reference](https://api.wm.com/Contactbilling/index.html)
+- [OpenAPI](openapi/wm-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/wm.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/wm.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### WM Cases & Tickets API
+
+List service cases (id, description, category, request date/time, status) and case detail, and list and retrieve detail for tickets - such as missed-pickup or extra-pickup requests - created against an account over a given date range.
+
+- **Human URL:** [https://api.wm.com/cases/index.html](https://api.wm.com/cases/index.html)
+- **Base URL:** `https://api.wm.com/v1`
+
+#### Properties
+
+- [API Reference](https://api.wm.com/cases/index.html)
+- [API Reference](https://api.wm.com/caseid/index.html)
+- [API Reference](https://api.wm.com/tickets/index.html)
+- [API Reference](https://api.wm.com/ticketd/index.html)
+- [OpenAPI](openapi/wm-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/wm.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/wm.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### WM Activities API
+
+Retrieve special servicing instructions and account notes, system-generated or CSR-sent email communications, and portal-created issue requests for an account over a given date range.
+
+- **Human URL:** [https://api.wm.com/activitiesoverview/index.html](https://api.wm.com/activitiesoverview/index.html)
+- **Base URL:** `https://api.wm.com/v1`
+
+#### Properties
+
+- [Documentation](https://api.wm.com/activitiesoverview/index.html)
+- [API Reference](https://api.wm.com/notes/index.html)
+- [API Reference](https://api.wm.com/email/index.html)
+- [API Reference](https://api.wm.com/issues/index.html)
+- [OpenAPI](openapi/wm-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/wm.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/wm.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+## Common Properties
+
+- [Website](https://www.wm.com)
+- [Documentation](https://api.wm.com/)
+- [LinkedIn](https://www.linkedin.com/company/waste-management)
+- [Plans](plans/wm-plans-pricing.yml)
+- [Rate Limits](rate-limits/wm-rate-limits.yml)
+- [Fin Ops](finops/wm-finops.yml)
+
+## Access Model
+
+There is no public API key signup. WM's documentation directs prospective integrators to email **apiaccess@wm.com** with a brief description of their need and the API(s) they want access to. Approved partners/customers receive a `ClientId` and authenticate with a JSON Web Token (JWT) Bearer token, sent along with a `Request-Tracking-Id` header on every call. A separate test environment is published at `https://apitest.wm.com/v1` alongside production at `https://api.wm.com/v1`.
+
+## Maintainers
+
+**FN:** Kin Lane
+**Email:** kin@apievangelist.com
